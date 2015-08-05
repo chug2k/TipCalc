@@ -12,6 +12,7 @@
 		18D9A7F21B711080003158B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18D9A7F01B711080003158B2 /* Main.storyboard */; };
 		18D9A7F41B711080003158B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18D9A7F31B711080003158B2 /* Assets.xcassets */; };
 		18D9A7F71B711080003158B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18D9A7F51B711080003158B2 /* LaunchScreen.storyboard */; };
+		18D9A8021B711AB0003158B2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D9A8011B711AB0003158B2 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		18D9A7F31B711080003158B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18D9A7F61B711080003158B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18D9A7F81B711080003158B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18D9A8011B711AB0003158B2 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,39 @@
 		18D9A7EB1B711080003158B2 /* TipCalc */ = {
 			isa = PBXGroup;
 			children = (
-				18D9A7EC1B711080003158B2 /* AppDelegate.swift */,
-				18D9A7EE1B711080003158B2 /* ViewController.swift */,
+				18D9A8001B711271003158B2 /* Controllers */,
+				18D9A7FF1B711269003158B2 /* Models */,
 				18D9A7F01B711080003158B2 /* Main.storyboard */,
+				18D9A7FE1B71124E003158B2 /* Supporting Files */,
+			);
+			path = TipCalc;
+			sourceTree = "<group>";
+		};
+		18D9A7FE1B71124E003158B2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				18D9A7EC1B711080003158B2 /* AppDelegate.swift */,
 				18D9A7F31B711080003158B2 /* Assets.xcassets */,
 				18D9A7F51B711080003158B2 /* LaunchScreen.storyboard */,
 				18D9A7F81B711080003158B2 /* Info.plist */,
 			);
-			path = TipCalc;
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		18D9A7FF1B711269003158B2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		18D9A8001B711271003158B2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				18D9A7EE1B711080003158B2 /* ViewController.swift */,
+				18D9A8011B711AB0003158B2 /* SettingsViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +163,7 @@
 			files = (
 				18D9A7EF1B711080003158B2 /* ViewController.swift in Sources */,
 				18D9A7ED1B711080003158B2 /* AppDelegate.swift in Sources */,
+				18D9A8021B711AB0003158B2 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
