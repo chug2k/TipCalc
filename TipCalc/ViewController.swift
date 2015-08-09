@@ -80,15 +80,23 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     var percent: Int = 0
     var tip: Double = 0
     var total: Double = 0
+    var currencySymbol = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        txtAmount.sizeToFit()
+        
         txtAmount.keyboardType = UIKeyboardType.DecimalPad
         
-        fmt.numberStyle = .DecimalStyle
+//        fmt.numberStyle = .DecimalStyle
+        fmt.numberStyle = .CurrencyStyle
         fmt.groupingSeparator = ","
+        
+        currencySymbol = fmt.currencySymbol
+        print(currencySymbol)
+        txtAmount.text = currencySymbol
         
         viewTip.hidden = true
         
@@ -97,10 +105,14 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
         updateSetting()
         checkRemember()
         
-        if txtAmount.text == "$" {
-            //txtAmount.becomeFirstResponder()
-        }
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        currencySymbol = fmt.currencySymbol
+        if txtAmount.text == currencySymbol {
+            txtAmount.becomeFirstResponder()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,8 +120,13 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        txtAmount.resignFirstResponder()
+        //txtAmount.resignFirstResponder()
+        if txtAmount.text != currencySymbol {
+            txtAmount.resignFirstResponder()
+        }
     }
     
     func checkRemember(){
@@ -118,7 +135,7 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
             let duration = Int(elapsedTime)
             if duration < 600 {
                 if let lastAmount = defaults.objectForKey("lastAmount") as! String? {
-                    if lastAmount != "$" {
+                    if lastAmount != currencySymbol {
                         txtAmount.text = lastAmount
                         
                         let lastSegIndex = defaults.integerForKey("lastSelectedSegIndex")
@@ -220,15 +237,27 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
 //            lblTip.text =  "\(iTip)"
 //        }
         
-        if txtAmount.text == "" {
-            txtAmount.text = "$"
+        if currencySymbol.rangeOfString(txtAmount.text!) != nil || txtAmount.text == "" {
+//            if txtAmount.text == "" {
+            txtAmount.text = currencySymbol
             viewTip.hidden = true
         } else {
-            if txtAmount.text?.characters.first == "$" {
-                if let sAmount : String? = txtAmount.text {
-                    txtAmount.text = String(dropFirst(sAmount!.characters))
+            if let sAmount : String? = txtAmount.text {
+                if sAmount!.rangeOfString(currencySymbol) != nil {
+                    txtAmount.text = sAmount?.replace(currencySymbol, withString: "")
+                    viewTip.hidden = false
                 }
-                viewTip.hidden = false
+            }
+        }
+        
+        if txtAmount.text?.characters.last == "." {
+            if var sAmount : String? = txtAmount.text {
+                sAmount = String(dropLast(sAmount!.characters))
+                
+                if sAmount?.rangeOfString(".") != nil {
+                    txtAmount.text = sAmount
+                }
+                
             }
         }
         
@@ -258,14 +287,14 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     func updateValue(){
         if let iAmout = NSNumberFormatter().numberFromString(txtAmount.text!) {
             tip = Double(iAmout) * Double(percent) / 100
-            lblTip.text = "$" + fmt.stringFromNumber(tip)!
+            lblTip.text = fmt.stringFromNumber(tip)!
             total = Double(iAmout) + tip
-            lblTotal.text = "$" + fmt.stringFromNumber(total)!
+            lblTotal.text = fmt.stringFromNumber(total)!
             
-            lbl1p.text = "$" + (NSString(format: "%.2f", total) as String)
-            lbl2p.text = "$" + (NSString(format: "%.2f", total / 2) as String)
-            lbl3p.text = "$" + (NSString(format: "%.2f", total / 3) as String)
-            lbl4p.text = "$" + (NSString(format: "%.2f", total / 4) as String)
+            lbl1p.text = fmt.stringFromNumber(total)!
+            lbl2p.text = fmt.stringFromNumber(total / 2)!
+            lbl3p.text = fmt.stringFromNumber(total / 3)!
+            lbl4p.text = fmt.stringFromNumber(total / 4)!
         }
     }
     
@@ -297,5 +326,13 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     
     
 
+}
+
+extension String
+{
+    func replace(target: String, withString: String) -> String
+    {
+        return self.stringByReplacingOccurrencesOfString(target, withString: withString, options: NSStringCompareOptions.LiteralSearch, range: nil)
+    }
 }
 
